@@ -1,0 +1,77 @@
+﻿@page "/uploadfile/uploadimagefileanddisplaytext"
+
+@using System.Net.Http.Headers
+
+@inject IImagePrintedTextRecognitionService imagePrintedTextRecognitionService;
+@inject IConfiguration configuration;
+
+<h1>Upload image file and display text</h1>
+
+<label>
+    Upload image file:
+    <InputFile OnChange="@OnInputFileChangeAsync" />
+</label><BR/><BR/>
+
+@if (imageRecognitionOutput != null)
+{
+    if(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage))
+    {
+        <span>@imageRecognitionOutput.ErrorMessage</span>
+    }
+    else if(imageRecognitionOutput.PrintedTextInImage != null)
+    {
+        <span>Image content</span><BR/><BR/>
+
+        @foreach(var paragraphInImage in imageRecognitionOutput.PrintedTextInImage.ParagraphInImages)
+        {
+            <p>
+            @foreach(var sentence in paragraphInImage.Sentences)
+            {
+                @sentence <br />
+            }
+            </p>
+        }
+    }
+}
+
+@code {
+    ImageRecognitionOutput imageRecognitionOutput = null;
+
+    private async Task OnInputFileChangeAsync(InputFileChangeEventArgs e)
+    {
+        long maxFileSize = 1024 * 1024 * 15;
+
+        try
+        {
+            var fileContent = 
+                new StreamContent(e.File.OpenReadStream(maxFileSize));
+
+            fileContent.Headers.ContentType = 
+                new MediaTypeHeaderValue(e.File.ContentType);
+
+            var uploadIamgeFileStream = await fileContent.ReadAsStreamAsync();
+
+            var imageRecognitionInput = new ImageRecognitionInput()
+            {
+                SubscriptionKey = configuration["SubscriptionKey"].ToString(),
+                AzureEndpointURL = configuration["AzureEndpointURL"].ToString(),
+                UploadImageFileStream = uploadIamgeFileStream,
+            };
+
+            imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+        }
+        catch (Exception ex)
+        {
+            imageRecognitionOutput = new ImageRecognitionOutput()
+            {
+                ErrorMessage = ex.Message,
+            };
+        }
+    }
+
+
+    private class File
+    {
+        public string? Name { get; set; }
+    }
+}
