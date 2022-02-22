@@ -8,8 +8,8 @@ Simple Blazor Server app which uses image recognition to identify and extract te
 
 ## Upload image file to analyse
 
-![](/WordleBlazorServerApp/WordleBlazorServerApp/wwwroot/Images/Demo1.png)
+![](BlazorServerImageRecognitionApp/BlazorServerImageRecognitionApp/wwwroot/Images/Demo1.png)
 
 ## Image file displayed and printed text from image displayed in text area
 
-![](/WordleBlazorServerApp/WordleBlazorServerApp/wwwroot/Images/Demo2.png)
+![](BlazorServerImageRecognitionApp/BlazorServerImageRecognitionApp/wwwroot/Images/Demo2.png)
