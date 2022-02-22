@@ -33,7 +33,7 @@ namespace ImageRecognitionEngine
 
                 OcrResult printedTextAnalysis = await computerVision.RecognizePrintedTextInStreamAsync(true, imageRecognitionInput.UploadImageFileStream);
 
-                var printedTextInImage = GetPrintedTextOutput(printedTextAnalysis);
+                string printedTextInImage = GetPrintedTextOutput(printedTextAnalysis);
 
                 return new ImageRecognitionOutput()
                 {
@@ -51,20 +51,18 @@ namespace ImageRecognitionEngine
             }
         }
 
-        private PrintedTextInImage GetPrintedTextOutput(OcrResult analysis)
+        private string GetPrintedTextOutput(OcrResult analysis)
         {
-            var printedTextInImage = new PrintedTextInImage();
-            
+            string printedTextInImage = string.Empty;
+
             foreach (var region in analysis.Regions)
             {
-                var paragraphInImage = new ParagraphInImage();
-
                 foreach (var line in region.Lines)
                 {
-                    paragraphInImage.Sentences.Add(string.Join(" ", line.Words.Select(x => x.Text).ToList()));
+                    printedTextInImage += $"{string.Join(" ", line.Words.Select(x => x.Text).ToList())}\n";
                 }
 
-                printedTextInImage.ParagraphInImages.Add(paragraphInImage);
+                printedTextInImage += "\n";
             }
 
             return printedTextInImage;
