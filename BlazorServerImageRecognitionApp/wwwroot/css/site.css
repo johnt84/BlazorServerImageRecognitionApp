@@ -90,3 +90,13 @@ a, .btn-link {
     color: red;
     margin-left: 10px;
 }
+
+.about-table {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.about-table-description-column {
+    width: 500px;
+    padding: 20px;
+}
