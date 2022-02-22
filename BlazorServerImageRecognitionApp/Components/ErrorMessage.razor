@@ -1,0 +1,11 @@
+﻿<div class="error-message">
+    @if (!string.IsNullOrWhiteSpace(ErrorMessageToDisplay))
+    {
+        <p>@ErrorMessageToDisplay</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string ErrorMessageToDisplay { get; set; } = string.Empty;
+}

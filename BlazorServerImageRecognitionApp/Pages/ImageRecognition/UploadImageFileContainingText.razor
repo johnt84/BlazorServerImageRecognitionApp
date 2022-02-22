@@ -1,0 +1,56 @@
+﻿@page "/imagerecognition/uploadimagefilecontainingtext"
+
+@inject IImagePrintedTextRecognitionService imagePrintedTextRecognitionService;
+@inject IConfiguration configuration;
+
+<h1>Upload image file containing text</h1>
+
+<div>
+    <label class="upload-image-file-label">
+        Upload image file:
+    </label>
+    <InputFile OnChange="@OnInputFileChangeAsync" accept="image/*" />
+</div>
+
+@if (!anyFileUploaded)
+{
+    return;
+}
+
+@if(!currentFileUploaded)
+{
+    <p><em>Loading...</em></p>
+}
+else if(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage))
+{
+   @* <div>
+        <span>@imageRecognitionOutput.ErrorMessage</span>
+    </div>*@
+    <ErrorMessage ErrorMessageToDisplay="@imageRecognitionOutput.ErrorMessage"></ErrorMessage>
+}
+else if(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage))
+{
+@*    <div>
+        <span>No text found in image file</span>
+    </div>*@
+    <ErrorMessage ErrorMessageToDisplay="No text found in image file"></ErrorMessage>
+}
+else if (imageRecognitionOutput != null && imageRecognitionOutput.IsSuccesful)
+{
+    <h3>Uploaded image</h3>
+    
+    <table class="uploaded-image-file-table">
+        <tr>
+            <th>Image Preview</th>
+            <th>Text in image</th>
+        </tr>
+        <tr>
+            <td>  
+                <img src="@imageRecognitionOutput.ImageUrl" alt="">
+            </td>
+            <td class="text-in-image-column">
+                <textarea rows="40" cols="80">@imageRecognitionOutput.PrintedTextInImage</textarea>
+            </td>
+        </tr>
+    </table>
+}

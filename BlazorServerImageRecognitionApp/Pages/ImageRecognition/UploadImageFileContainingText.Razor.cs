@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Headers;
 
-namespace BlazorServerImageRecognitionApp.Pages.UploadFile
+namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
 {
-    public partial class UploadImageFileAndDisplayText
+    public partial class UploadImageFileContainingText
     {
         private ImageRecognitionOutput imageRecognitionOutput = new ImageRecognitionOutput();
         private bool anyFileUploaded = false;
@@ -33,7 +33,7 @@ namespace BlazorServerImageRecognitionApp.Pages.UploadFile
             {
                 imageRecognitionOutput = new ImageRecognitionOutput()
                 {
-                    ErrorMessage = "Please uplaod a valid image file",
+                    ErrorMessage = "Please upload a valid image file",
                 };
 
                 currentFileUploaded = true;
@@ -60,7 +60,7 @@ namespace BlazorServerImageRecognitionApp.Pages.UploadFile
 
                 var uploadFile = e.File;
 
-                var imageFile = await uploadFile.RequestImageFileAsync("image/jpeg", 700, 500);
+                var imageFile = await uploadFile.RequestImageFileAsync("image/jpeg", 680, 480);
                 using var fileStream = imageFile.OpenReadStream(maxFileSize);
 
                 var uploadImageFileStream = await fileContent.ReadAsStreamAsync();

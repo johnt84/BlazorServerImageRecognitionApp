@@ -62,3 +62,31 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.upload-image-file-label {
+    margin-top: 10px;
+    margin-bottom: 25px;
+    margin-right: 5px;
+}
+
+.uploaded-image-file-table {
+    margin-top: 20px;
+}
+
+    .uploaded-image-file-table tr {
+        text-align: center;
+    }
+
+    .uploaded-image-file-table td {
+        vertical-align: top;
+        padding: 12px;
+    }
+
+.text-in-image-column {
+    width: 600px;
+}
+
+.error-message {
+    color: red;
+    margin-left: 10px;
+}

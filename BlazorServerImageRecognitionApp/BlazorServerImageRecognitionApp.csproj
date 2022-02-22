@@ -4,11 +4,16 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c30b7b2c-0613-4839-8415-d88bb0953f09</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ImagePrintedTextRecognitionEngine\ImagePrintedTextRecognitionEngine.csproj" />
     <ProjectReference Include="..\ImagePrintedTextRecognitionShared\ImagePrintedTextRecognitionShared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\" />
   </ItemGroup>
 
 </Project>
