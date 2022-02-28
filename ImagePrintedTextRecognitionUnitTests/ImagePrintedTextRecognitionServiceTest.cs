@@ -13,6 +13,11 @@ namespace ImagePrintedTextRecognitionUnitTests
         [TestMethod]
         public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfully()
         {
+            string CleanPrintedTextInImage(string printedTextInImage) => printedTextInImage
+                            .Replace("\r\n", string.Empty)
+                            .Replace("t ", string.Empty)
+                            .Replace("\n", string.Empty);
+
             try
             {
                 var builder = new ConfigurationBuilder()
@@ -55,15 +60,8 @@ Sodium 20mq";
                     Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
 
                     Assert.AreEqual(
-                        testPrintedTextOutput
-                            .Replace("\r\n", string.Empty)
-                            .Replace("t ", string.Empty)
-                            .Replace("\n", string.Empty)
-                        , imageRecognitionOutput.PrintedTextInImage
-                            .Replace("\r\n", string.Empty)
-                            .Replace("t ", string.Empty)
-                            .Replace("\n", string.Empty));
-
+                        CleanPrintedTextInImage(testPrintedTextOutput)
+                        , CleanPrintedTextInImage(imageRecognitionOutput.PrintedTextInImage));
                 }
             }
             catch (FileNotFoundException ioEx)
