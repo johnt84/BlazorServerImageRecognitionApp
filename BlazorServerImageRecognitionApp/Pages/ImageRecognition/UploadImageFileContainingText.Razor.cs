@@ -47,23 +47,19 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
 
                 fileContent.Headers.ContentType = new MediaTypeHeaderValue(e.File.ContentType);
 
-                var uploadIamgeFileStream = await fileContent.ReadAsStreamAsync();
+                var uploadImageFileStream = await fileContent.ReadAsStreamAsync();
 
                 var imageRecognitionInput = new ImageRecognitionInput()
                 {
                     SubscriptionKey = configuration["SubscriptionKey"].ToString(),
                     AzureEndpointURL = configuration["AzureEndpointURL"].ToString(),
-                    UploadImageFileStream = uploadIamgeFileStream,
+                    UploadImageFileStream = uploadImageFileStream,
                 };
 
                 imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
 
-                var uploadFile = e.File;
-
-                var imageFile = await uploadFile.RequestImageFileAsync("image/jpeg", 680, 480);
+                var imageFile = await e.File.RequestImageFileAsync("image/jpeg", 680, 480);
                 using var fileStream = imageFile.OpenReadStream(maxFileSize);
-
-                var uploadImageFileStream = await fileContent.ReadAsStreamAsync();
 
                 using var memoryStream = new MemoryStream();
                 await fileStream.CopyToAsync(memoryStream);
