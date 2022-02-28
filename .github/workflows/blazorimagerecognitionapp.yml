@@ -3,6 +3,9 @@ on:
   push:
     branches:
     - main
+    paths:
+    - 'BlazorServerImageRecognitionApp/**'
+    - 'ImagePrintedTextRecognitionEngine/**'
 env:
   AZURE_WEBAPP_NAME: blazorimagerecognitionapp
   AZURE_WEBAPP_PACKAGE_PATH: BlazorServerImageRecognitionApp/publish
