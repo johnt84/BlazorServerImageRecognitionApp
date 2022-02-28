@@ -23,16 +23,10 @@
 }
 else if(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage))
 {
-   @* <div>
-        <span>@imageRecognitionOutput.ErrorMessage</span>
-    </div>*@
     <ErrorMessage ErrorMessageToDisplay="@imageRecognitionOutput.ErrorMessage"></ErrorMessage>
 }
 else if(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage))
 {
-@*    <div>
-        <span>No text found in image file</span>
-    </div>*@
     <ErrorMessage ErrorMessageToDisplay="No text found in image file"></ErrorMessage>
 }
 else if (imageRecognitionOutput != null && imageRecognitionOutput.IsSuccesful)
