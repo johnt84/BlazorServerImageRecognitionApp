@@ -37,7 +37,7 @@ namespace ImageRecognitionEngine
 
                 return new ImageRecognitionOutput()
                 {
-                    IsSuccesful = true,
+                    IsSuccesful = !string.IsNullOrWhiteSpace(printedTextInImage),
                     PrintedTextInImage = printedTextInImage,
                 };
             }
