@@ -11,7 +11,7 @@ namespace ImagePrintedTextRecognitionUnitTests
     public class ImagePrintedTextRecognitionServiceTest
     {
         [TestMethod]
-        public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextOutput()
+        public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfully()
         {
             try
             {
