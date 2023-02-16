@@ -4,7 +4,7 @@ Simple Blazor Server app which uses image recognition to identify and extract te
 
 * GUI frontend project developed using Blazor Server/.Net 6
 * Image printed text recognition engine is a class library project developed using .Net 6
-   * Communicates with the Azure Computer Vision Cognitive Service 7
+   * Communicates with the Azure Computer Vision API v3.2
 * Unit Test app which unit tests the image printed text recognition engine.  Uses MS Test .Net 6.
 
 ## Upload image file to analyse

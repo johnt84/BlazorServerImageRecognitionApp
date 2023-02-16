@@ -41,19 +41,19 @@ namespace ImagePrintedTextRecognitionUnitTests
                     var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
 
                     string testPrintedTextOutput = @"Nutrition Facts Amount Per Serving
-see: bar (40g)
+Serving size: 1 bar (40g)
+Serving Per Package: 4
 Total Fat 13g
-Servng Per Package: 4
-Saturated t 1.5 g
-
+Saturated Fat 1.5g
 Amount Per Serving
+Trans Fat 0g
 alories 190
-ories from Fat 110
-t Daily Values are based
-
-Trans Fat Og
 Cholesterol Omg
-Sodium 20mq";
+ories from Fat 110
+Sodium 20mg
+nt Daily Values are based on
+Vitamin A 50%
+calorie diet";
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsTrue(imageRecognitionOutput.IsSuccesful);
