@@ -26,14 +26,23 @@ namespace ImageRecognitionEngine
         {
             try
             {
-                var computerVision = new ComputerVisionClient(new ApiKeyServiceClientCredentials(imageRecognitionInput.SubscriptionKey))
+                var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(imageRecognitionInput.SubscriptionKey))
                 {
                     Endpoint = imageRecognitionInput.AzureEndpointURL,
                 };
 
-                OcrResult printedTextAnalysis = await computerVision.RecognizePrintedTextInStreamAsync(true, imageRecognitionInput.UploadImageFileStream);
+                var result = await GetReadResultsFromStream(client, imageRecognitionInput);
 
-                string printedTextInImage = GetPrintedTextOutput(printedTextAnalysis);
+                if(result.Status != OperationStatusCodes.Succeeded)
+                {
+                    return new ImageRecognitionOutput()
+                    {
+                        IsSuccesful = false,
+                        PrintedTextInImage = string.Empty,
+                    };
+                }
+
+                string printedTextInImage = GetPrintedTextOutput(result.AnalyzeResult.ReadResults);
 
                 return new ImageRecognitionOutput()
                 {
@@ -51,18 +60,37 @@ namespace ImageRecognitionEngine
             }
         }
 
-        private string GetPrintedTextOutput(OcrResult analysis)
+        private async Task<ReadOperationResult> GetReadResultsFromStream(ComputerVisionClient client, ImageRecognitionInput imageRecognitionInput)
+        {
+            var textHeaders = await client.ReadInStreamAsync(imageRecognitionInput.UploadImageFileStream);
+
+            string operationLocation = textHeaders.OperationLocation;
+
+            const int numberOfCharsInOperationId = 36;
+            string operationId = operationLocation.Substring(operationLocation.Length - numberOfCharsInOperationId);
+
+            ReadOperationResult result;
+
+            do
+            {
+                result = await client.GetReadResultAsync(Guid.Parse(operationId));
+            }
+            while ((result.Status == OperationStatusCodes.Running ||
+                result.Status == OperationStatusCodes.NotStarted));
+
+            return result;
+        }
+
+        private string GetPrintedTextOutput(IList<ReadResult> textUrlFileResults)
         {
             string printedTextInImage = string.Empty;
 
-            foreach (var region in analysis.Regions)
+            foreach (ReadResult page in textUrlFileResults)
             {
-                foreach (var line in region.Lines)
+                foreach (Line line in page.Lines)
                 {
-                    printedTextInImage += $"{string.Join(" ", line.Words.Select(x => x.Text).ToList())}\n";
+                    printedTextInImage += $"{line.Text}\n";
                 }
-
-                printedTextInImage += "\n";
             }
 
             return printedTextInImage;
