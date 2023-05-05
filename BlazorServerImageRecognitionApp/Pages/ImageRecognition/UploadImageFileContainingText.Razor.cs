@@ -16,13 +16,13 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
             anyFileUploaded = true;
             currentFileUploaded = false;
 
-            long maxFileSize = 1024 * 1024 * 15;
+            int.TryParse(configuration["MaxImageFileSize"], out int maxImageFileSize);
 
-            if (e.File.Size > maxFileSize)
+            if (e.File.Size > maxImageFileSize)
             {
                 imageRecognitionOutput = new ImageRecognitionOutput()
                 {
-                    ErrorMessage = $"The file size is {e.File.Size} bytes, this is more than the allowed limit of {maxFileSize} bytes.",
+                    ErrorMessage = $"The file size is {e.File.Size} bytes, this is more than the allowed limit of {maxImageFileSize} bytes.",
                 };
 
                 currentFileUploaded = true;
@@ -43,7 +43,7 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
 
             try
             {
-                var fileContent = new StreamContent(e.File.OpenReadStream(maxFileSize));
+                var fileContent = new StreamContent(e.File.OpenReadStream(maxImageFileSize));
 
                 fileContent.Headers.ContentType = new MediaTypeHeaderValue(e.File.ContentType);
 
@@ -59,7 +59,7 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
                 imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
 
                 var imageFile = await e.File.RequestImageFileAsync("image/jpeg", 680, 480);
-                using var fileStream = imageFile.OpenReadStream(maxFileSize);
+                using var fileStream = imageFile.OpenReadStream(maxImageFileSize);
 
                 using var memoryStream = new MemoryStream();
                 await fileStream.CopyToAsync(memoryStream);
