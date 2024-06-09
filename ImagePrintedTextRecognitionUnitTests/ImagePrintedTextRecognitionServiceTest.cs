@@ -10,14 +10,14 @@ namespace ImagePrintedTextRecognitionUnitTests
     [TestClass]
     public class ImagePrintedTextRecognitionServiceTest
     {
+        private string CleanPrintedTextInImage(string printedTextInImage) => printedTextInImage
+            .Replace("\r\n", string.Empty)
+            .Replace("t ", string.Empty)
+            .Replace("\n", string.Empty);
+
         [TestMethod]
         public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfully()
         {
-            string CleanPrintedTextInImage(string printedTextInImage) => printedTextInImage
-                            .Replace("\r\n", string.Empty)
-                            .Replace("t ", string.Empty)
-                            .Replace("\n", string.Empty);
-
             try
             {
                 var builder = new ConfigurationBuilder()
@@ -26,7 +26,7 @@ namespace ImagePrintedTextRecognitionUnitTests
 
                 var config = builder.Build();
 
-                string imageFilePath = @"C:\Apps\ComputerVisionReceiptScanner\ReceiptComputerVision\ReceiptComputerVision\ReceiptComputerVision\images\printed_text.jpg";
+                string imageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\printed_text.jpg";
 
                 using (var fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -38,7 +38,7 @@ namespace ImagePrintedTextRecognitionUnitTests
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                     string testPrintedTextOutput = @"Nutrition Facts Amount Per Serving
 Serving size: 1 bar (40g)
@@ -81,7 +81,7 @@ calorie diet";
 
                 var config = builder.Build();
 
-                string imageFilePath = @"C:\Users\jtomlinson\OneDrive - Brightree\Pictures\ProfilePic.jpg";
+                string imageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\NonPrintedTextImage.jpg";
 
                 using (var fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -93,11 +93,20 @@ calorie diet";
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
+
+                    string testPrintedTextOutput = @"Z Fullscreen
+X
+Photos - FileInfo.com Example.jpg
+.JPG-file open in Microsoft Photos 2021. @ FileInfo.com";
 
                     Assert.IsNotNull(imageRecognitionOutput);
-                    Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
-                    Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage));
+                    Assert.IsTrue(imageRecognitionOutput.IsSuccesful);
+                    Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
+
+                    Assert.AreEqual(
+                      CleanPrintedTextInImage(testPrintedTextOutput)
+                      , CleanPrintedTextInImage(imageRecognitionOutput.PrintedTextInImage));
                 }
             }
             catch (FileNotFoundException ioEx)
@@ -117,7 +126,7 @@ calorie diet";
 
                 var config = builder.Build();
 
-                string nonImageFilePath = @"C:\Apps\ComputerVisionReceiptScanner\ReceiptComputerVision\ReceiptComputerVision\ReceiptComputerVision\images\Receipt25thJun01.pdf";
+                string nonImageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\Test.txt";
 
                 using (var fileStream = new FileStream(nonImageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -129,7 +138,7 @@ calorie diet";
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
@@ -154,7 +163,7 @@ calorie diet";
 
                 var config = builder.Build();
 
-                string nonImageFilePath = @"C:\Apps\ComputerVisionReceiptScanner\ReceiptComputerVision\ReceiptComputerVision\ReceiptComputerVision\images\printed_text.jpg";
+                string nonImageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\printed_text.jpg";
 
                 using (var fileStream = new FileStream(nonImageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -166,7 +175,7 @@ calorie diet";
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
@@ -191,7 +200,7 @@ calorie diet";
 
                 var config = builder.Build();
 
-                string nonImageFilePath = @"C:\Apps\ComputerVisionReceiptScanner\ReceiptComputerVision\ReceiptComputerVision\ReceiptComputerVision\images\printed_text.jpg";
+                string nonImageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\printed_text.jpg";
 
                 using (var fileStream = new FileStream(nonImageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -203,7 +212,7 @@ calorie diet";
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
@@ -228,7 +237,7 @@ calorie diet";
 
                 var config = builder.Build();
 
-                string nonImageFilePath = @"C:\Apps\ComputerVisionReceiptScanner\ReceiptComputerVision\ReceiptComputerVision\ReceiptComputerVision\images\printed_text.jpg";
+                string nonImageFilePath = @"C:\Apps\BlazorServerImageRecognitionApp\BlazorServerImageRecognitionApp\wwwroot\images\printed_text.jpg";
 
                 using (var fileStream = new FileStream(nonImageFilePath, FileMode.Open, FileAccess.Read))
                 {
@@ -240,7 +249,7 @@ calorie diet";
                     };
 
                     var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                    var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);

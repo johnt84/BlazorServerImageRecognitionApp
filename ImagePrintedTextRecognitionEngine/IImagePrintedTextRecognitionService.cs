@@ -4,6 +4,6 @@ namespace ImageRecognitionEngine
 {
     public interface IImagePrintedTextRecognitionService
     {
-        Task<ImageRecognitionOutput> UploadFileAndConvertToText(ImageRecognitionInput imageRecognitionInput);
+        Task<ImageRecognitionOutput> UploadFileAndConvertToTextAsync(ImageRecognitionInput imageRecognitionInput);
     }
 }

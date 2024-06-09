@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>c30b7b2c-0613-4839-8415-d88bb0953f09</UserSecretsId>
@@ -14,6 +14,12 @@
 
   <ItemGroup>
     <Folder Include="Components\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\UploadImageFile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

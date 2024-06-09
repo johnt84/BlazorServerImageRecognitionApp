@@ -56,7 +56,7 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
                     UploadImageFileStream = uploadImageFileStream,
                 };
 
-                imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+                imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
                 var imageFile = await e.File.RequestImageFileAsync("image/jpeg", 680, 480);
                 using var fileStream = imageFile.OpenReadStream(maxImageFileSize);
