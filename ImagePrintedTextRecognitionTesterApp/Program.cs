@@ -20,7 +20,7 @@ try
         };
 
         var imagePrintedTextRecognitionService = new ImagePrintedTextRecognitionService();
-        var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToText(imageRecognitionInput);
+        var imageRecognitionOutput = await imagePrintedTextRecognitionService.UploadFileAndConvertToTextAsync(imageRecognitionInput);
 
         Console.WriteLine("Printed text in image: \n");
 

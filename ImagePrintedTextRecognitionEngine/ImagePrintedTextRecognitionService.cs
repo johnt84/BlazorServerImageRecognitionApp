@@ -6,7 +6,7 @@ namespace ImageRecognitionEngine
 {
     public class ImagePrintedTextRecognitionService : IImagePrintedTextRecognitionService
     {
-        public async Task<ImageRecognitionOutput> UploadFileAndConvertToText(ImageRecognitionInput imageRecognitionInput)
+        public async Task<ImageRecognitionOutput> UploadFileAndConvertToTextAsync(ImageRecognitionInput imageRecognitionInput)
         {
             if(imageRecognitionInput == null || string.IsNullOrWhiteSpace(imageRecognitionInput.SubscriptionKey) 
                 || string.IsNullOrWhiteSpace(imageRecognitionInput.AzureEndpointURL) 
@@ -19,10 +19,10 @@ namespace ImageRecognitionEngine
                 };
             }
 
-            return await GetPrintedTextFromUploadStream(imageRecognitionInput);
+            return await GetPrintedTextFromUploadStreamAsync(imageRecognitionInput);
         }
 
-        private async Task<ImageRecognitionOutput> GetPrintedTextFromUploadStream(ImageRecognitionInput imageRecognitionInput)
+        private async Task<ImageRecognitionOutput> GetPrintedTextFromUploadStreamAsync(ImageRecognitionInput imageRecognitionInput)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace ImageRecognitionEngine
                     Endpoint = imageRecognitionInput.AzureEndpointURL,
                 };
 
-                var result = await GetReadResultsFromStream(client, imageRecognitionInput);
+                var result = await GetReadResultsFromStreamAsync(client, imageRecognitionInput);
 
                 if(result.Status != OperationStatusCodes.Succeeded)
                 {
@@ -60,7 +60,7 @@ namespace ImageRecognitionEngine
             }
         }
 
-        private async Task<ReadOperationResult> GetReadResultsFromStream(ComputerVisionClient client, ImageRecognitionInput imageRecognitionInput)
+        private async Task<ReadOperationResult> GetReadResultsFromStreamAsync(ComputerVisionClient client, ImageRecognitionInput imageRecognitionInput)
         {
             var textHeaders = await client.ReadInStreamAsync(imageRecognitionInput.UploadImageFileStream);
 
