@@ -2,10 +2,10 @@
 
 Simple Blazor Server app which uses image recognition to identify and extract text printed in an image file uploaded by the user.  The app utilises the recognise printed text in image function in the Azure Computer Vision Cognitive service to identify and extract printed text from an uploaded image file
 
-* GUI frontend project developed using Blazor Server/.Net 8
-* Image printed text recognition engine is a class library project developed using .Net 8
+* GUI frontend project developed using Blazor Server/.Net 10
+* Image printed text recognition engine is a class library project developed using .Net 10
    * Communicates with the Azure Computer Vision API v3.2
-* Unit Test app which unit tests the image printed text recognition engine.  Uses MS Test .Net 8.
+* Unit Test app which unit tests the image printed text recognition engine.  Uses MS Test .Net 10.
 
 ## Upload image file to analyse
 
