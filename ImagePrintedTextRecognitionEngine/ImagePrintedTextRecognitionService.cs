@@ -1,6 +1,9 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+﻿using Azure.Core;
+using Azure.Identity;
 using ImagePrintedTextRecognitionShared;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using Microsoft.Rest;
 
 namespace ImageRecognitionEngine
 {
@@ -8,7 +11,7 @@ namespace ImageRecognitionEngine
     {
         public async Task<ImageRecognitionOutput> UploadFileAndConvertToTextAsync(ImageRecognitionInput imageRecognitionInput)
         {
-            if(imageRecognitionInput == null || string.IsNullOrWhiteSpace(imageRecognitionInput.SubscriptionKey) 
+            if(imageRecognitionInput == null || string.IsNullOrWhiteSpace(imageRecognitionInput.TenantId) 
                 || string.IsNullOrWhiteSpace(imageRecognitionInput.AzureEndpointURL) 
                 || imageRecognitionInput.UploadImageFileStream == null)
             {
@@ -26,9 +29,20 @@ namespace ImageRecognitionEngine
         {
             try
             {
-                var client = new ComputerVisionClient(new ApiKeyServiceClientCredentials(imageRecognitionInput.SubscriptionKey))
+                var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
                 {
-                    Endpoint = imageRecognitionInput.AzureEndpointURL,
+                    TenantId = imageRecognitionInput.TenantId
+                });
+
+                var token = await credential.GetTokenAsync(
+                    new TokenRequestContext(
+                        new[] { "https://cognitiveservices.azure.com/.default" }
+                    )
+                );
+
+                var client = new ComputerVisionClient(new TokenCredentials(token.Token))
+                {
+                    Endpoint = imageRecognitionInput.AzureEndpointURL
                 };
 
                 var result = await GetReadResultsFromStreamAsync(client, imageRecognitionInput);

@@ -2,8 +2,8 @@
 {
     public class ImageRecognitionInput
     {
-        public string SubscriptionKey { get; set; } = string.Empty;
+        public string TenantId { get; set; } = string.Empty;
         public string AzureEndpointURL { get; set; } = string.Empty;
-        public Stream UploadImageFileStream { get; set; }
+        public Stream UploadImageFileStream { get; set; } = null!;
     }
 }

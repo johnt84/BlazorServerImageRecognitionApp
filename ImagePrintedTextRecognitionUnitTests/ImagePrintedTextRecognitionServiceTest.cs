@@ -16,7 +16,7 @@ namespace ImagePrintedTextRecognitionUnitTests
             .Replace("\n", string.Empty);
 
         [TestMethod]
-        public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfully()
+        public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfullyAsync()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace ImagePrintedTextRecognitionUnitTests
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = config["AzureSubscriptionKey"],
+                        TenantId = config["TenantId"],
                         AzureEndpointURL = config["AzureEndpointURL"],
                         UploadImageFileStream = fileStream,
                     };
@@ -71,7 +71,7 @@ calorie diet";
         }
 
         [TestMethod]
-        public async Task WhenImageFileUploadedWithWithNoPrintedText_ThenPrintedTextInImageIsEmpty()
+        public async Task WhenImageFileUploadedWithWithNoPrintedText_ThenPrintedTextInImageIsEmptyAsync()
         {
             try
             {
@@ -87,7 +87,7 @@ calorie diet";
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = config["AzureSubscriptionKey"],
+                        TenantId = config["TenantId"],
                         AzureEndpointURL = config["AzureEndpointURL"],
                         UploadImageFileStream = fileStream,
                     };
@@ -116,7 +116,7 @@ Photos - FileInfo.com Example.jpg
         }
 
         [TestMethod]
-        public async Task WhenNonImageFileUploaded_ThenErrorMessage()
+        public async Task WhenNonImageFileUploaded_ThenErrorMessageAsync()
         {
             try
             {
@@ -132,7 +132,7 @@ Photos - FileInfo.com Example.jpg
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = config["AzureSubscriptionKey"],
+                        TenantId = config["TenantId"],
                         AzureEndpointURL = config["AzureEndpointURL"],
                         UploadImageFileStream = fileStream,
                     };
@@ -142,7 +142,7 @@ Photos - FileInfo.com Example.jpg
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
                     Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage));
                 }
             }
@@ -153,7 +153,7 @@ Photos - FileInfo.com Example.jpg
         }
 
         [TestMethod]
-        public async Task WhenNoAzureSubscriptionKey_ThenErrorMessage()
+        public async Task WhenNoTenantId_ThenErrorMessageAsync()
         {
             try
             {
@@ -169,7 +169,7 @@ Photos - FileInfo.com Example.jpg
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = string.Empty,
+                        TenantId = string.Empty,
                         AzureEndpointURL = config["AzureEndpointURL"],
                         UploadImageFileStream = fileStream,
                     };
@@ -179,7 +179,7 @@ Photos - FileInfo.com Example.jpg
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
                     Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage));
                 }
             }
@@ -190,7 +190,7 @@ Photos - FileInfo.com Example.jpg
         }
 
         [TestMethod]
-        public async Task WhenNoAzureEndpointURL_ThenErrorMessage()
+        public async Task WhenNoAzureEndpointURL_ThenErrorMessageAsync()
         {
             try
             {
@@ -206,7 +206,7 @@ Photos - FileInfo.com Example.jpg
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = config["AzureSubscriptionKey"],
+                        TenantId = config["TenantId"],
                         AzureEndpointURL = string.Empty,
                         UploadImageFileStream = fileStream,
                     };
@@ -216,7 +216,7 @@ Photos - FileInfo.com Example.jpg
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
                     Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage));
                 }
             }
@@ -227,7 +227,7 @@ Photos - FileInfo.com Example.jpg
         }
 
         [TestMethod]
-        public async Task WhenNoUploadImageFileStream_ThenErrorMessage()
+        public async Task WhenNoUploadImageFileStream_ThenErrorMessageAsync()
         {
             try
             {
@@ -243,7 +243,7 @@ Photos - FileInfo.com Example.jpg
                 {
                     var imageRecognitionInput = new ImageRecognitionInput()
                     {
-                        SubscriptionKey = config["AzureSubscriptionKey"],
+                        TenantId = config["TenantId"],
                         AzureEndpointURL = config["AzureEndpointURL"],
                         UploadImageFileStream = null,
                     };
@@ -253,7 +253,7 @@ Photos - FileInfo.com Example.jpg
 
                     Assert.IsNotNull(imageRecognitionOutput);
                     Assert.IsFalse(imageRecognitionOutput.IsSuccesful);
-                    Assert.IsTrue(!string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(imageRecognitionOutput.ErrorMessage));
                     Assert.IsTrue(string.IsNullOrWhiteSpace(imageRecognitionOutput.PrintedTextInImage));
                 }
             }

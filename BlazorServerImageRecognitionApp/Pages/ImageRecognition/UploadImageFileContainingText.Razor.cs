@@ -51,8 +51,8 @@ namespace BlazorServerImageRecognitionApp.Pages.ImageRecognition
 
                 var imageRecognitionInput = new ImageRecognitionInput()
                 {
-                    SubscriptionKey = configuration["SubscriptionKey"].ToString(),
-                    AzureEndpointURL = configuration["AzureEndpointURL"].ToString(),
+                    TenantId = configuration["TenantId"]?.ToString() ?? string.Empty,
+                    AzureEndpointURL = configuration["AzureEndpointURL"]?.ToString() ?? string.Empty,
                     UploadImageFileStream = uploadImageFileStream,
                 };
 
