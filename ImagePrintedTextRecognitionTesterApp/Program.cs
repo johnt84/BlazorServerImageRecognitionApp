@@ -14,7 +14,7 @@ try
     {
         var imageRecognitionInput = new ImageRecognitionInput()
         {
-            SubscriptionKey = config["AzureSubscriptionKey"],
+            TenantId = config["TenantId"],
             AzureEndpointURL = config["AzureEndpointURL"],
             UploadImageFileStream = fileStream,
         };
