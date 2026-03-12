@@ -16,7 +16,7 @@ namespace ImagePrintedTextRecognitionUnitTests
             .Replace("\n", string.Empty);
 
         [TestMethod]
-        public async Task WhenValidImageWithWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfullyAsync()
+        public async Task WhenValidImageWithPrintedTextUploaded_ThenPrintedTextInImageReturnedSuccessfullyAsync()
         {
             try
             {
@@ -71,7 +71,7 @@ calorie diet";
         }
 
         [TestMethod]
-        public async Task WhenImageFileUploadedWithWithNoPrintedText_ThenPrintedTextInImageIsEmptyAsync()
+        public async Task WhenImageFileUploadedWithNoPrintedText_ThenPrintedTextInImageIsEmptyAsync()
         {
             try
             {

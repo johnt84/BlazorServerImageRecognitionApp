@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="BlazorServerImageRecognitionApp/BlazorServerImageRecognitionApp.csproj" />
+  <Project Path="ImagePrintedTextRecognitionEngine/ImagePrintedTextRecognitionEngine.csproj" />
+  <Project Path="ImagePrintedTextRecognitionShared/ImagePrintedTextRecognitionShared.csproj" />
+  <Project Path="ImagePrintedTextRecognitionTesterApp/ImagePrintedTextRecognitionTesterApp.csproj" />
+  <Project Path="ImagePrintedTextRecognitionUnitTests/ImagePrintedTextRecognitionUnitTests.csproj" />
+</Solution>
